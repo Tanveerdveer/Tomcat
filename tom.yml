@@ -1,0 +1,22 @@
+---
+- name: create a directory
+  hosts: localhost
+  tasks:
+
+  - name: installing podman
+    package:
+      name: "podman"
+      state: present
+
+  - name: Pull an image
+    podman_image:
+      name: tomcat:latest
+
+  - name: creating a container    
+    containers.podman.podman_container:
+      name: tomcat1
+      image: docker.io/tomcat
+      state: started
+      detach: true
+      ports:
+       - 8080:8080
